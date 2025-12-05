@@ -1,4 +1,4 @@
-with open("input_03.txt") as f:
+with open("inputs/02.txt") as f:
     banks = f.read().splitlines()
 
 # A

@@ -2,7 +2,7 @@ from utils import read_lines
 
 # A
 current_position = 50
-dial_operations = read_lines("input_01.txt")
+dial_operations = read_lines("inputs/01.txt")
 password = 0
 for operation in dial_operations:
     SIGN = 1 if operation[0] == "R" else -1
@@ -15,7 +15,7 @@ print(password)
 # B
 
 current_position = 50
-dial_operations = read_lines("input_01.txt")
+dial_operations = read_lines("inputs/01.txt")
 password = 0
 for operation in dial_operations:
     SIGN = 1 if operation[0] == "R" else -1

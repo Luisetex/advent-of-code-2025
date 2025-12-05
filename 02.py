@@ -1,6 +1,6 @@
 import math
 
-with open("input_02.txt", "r") as input_file:
+with open("inputs/02.txt", "r") as input_file:
     ranges = [
         tuple(map(int, range_.split("-"))) for range_ in input_file.read().split(",")
     ]

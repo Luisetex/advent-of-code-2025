@@ -1,6 +1,6 @@
 import itertools
 
-with open("input_04.txt", "r") as f:
+with open("inputs/04.txt", "r") as f:
     grid = [
         [True if el == "@" else False for el in line] for line in f.read().splitlines()
     ]
