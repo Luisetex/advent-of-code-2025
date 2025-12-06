@@ -26,8 +26,9 @@ print(sum(results))
 def parse_problems(problems: list[str]):
     parsed_problems = []
     parsed_problem = ""
+    operator = ""
     for column in range(len(problems[0])):
-        current_column = ""
+        current_column = " "
         for row in range(len(problems)):
             char = (
                 problems[row][column]
@@ -35,13 +36,16 @@ def parse_problems(problems: list[str]):
                 else problems[row][column] + " "
             )
             if "*" in char or "+" in char:
-                char = " " + char + " "
+                operator = char.strip()
+                continue
             current_column += char
         if current_column.split():
             parsed_problem += current_column
         else:
+            parsed_problem += operator
             parsed_problems.append(parsed_problem)
             parsed_problem = ""
+    parsed_problem += operator
     parsed_problems.append(parsed_problem)
     return parsed_problems
 
@@ -52,8 +56,8 @@ with open("inputs/06.txt", "r") as f:
 parsed_problems = parse_problems(problems)
 results = []
 for parsed_problem in parsed_problems:
-    numbers = [int(val) for val in parsed_problem.split() if val.isdigit()]
-    operation = [val for val in parsed_problem.split() if not val.isdigit()][0]
+    numbers = [int(val) for val in parsed_problem[:-1].split()]
+    operation = parsed_problem[-1]
     result = sum(numbers) if operation == "+" else multiply(numbers)
     results.append(result)
 
