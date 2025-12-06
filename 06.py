@@ -3,11 +3,9 @@ with open("tests/06.txt", "r") as f:
 
 
 def multiply(numbers: list[int]) -> int:
-    prev = 1
     current = 1
     for number in numbers:
-        current = prev * number
-        prev = current
+        current *= number
     return current
 
 
@@ -23,7 +21,7 @@ print(sum(results))
 
 
 # B
-def parse_problems(problems: list[str]):
+def parse_problems(problems: list[str]) -> list[str]:
     parsed_problems = []
     parsed_problem = ""
     operator = ""
