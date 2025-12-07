@@ -7,19 +7,19 @@ with open("inputs/07.txt", "r") as f:
 def split_beam(
     beam_index: tuple[int, int], diagram: list[str]
 ) -> tuple[list[tuple[int, int]], bool]:
-    next_indices = beam_index[0] + 1, beam_index[1]
-    is_split = False
-    if diagram[next_indices[0]][next_indices[1]] == ".":
-        return [(next_indices[0] + 1, next_indices[1])], is_split
-    is_split = True
-    left = next_indices[0] + 1, next_indices[1] - 1
-    right = next_indices[0] + 1, next_indices[1] + 1
+    row, col = beam_index
+    next_row = row + 1
+
+    if diagram[next_row][col] == ".":
+        return [(next_row + 1, col)], False
+
     splits = []
-    if 0 < left[0] < len(diagram) and 0 < left[1] < len(diagram[0]):
-        splits.append(left)
-    if 0 < right[0] < len(diagram) and 0 < right[1] < len(diagram[0]):
-        splits.append(right)
-    return splits, is_split
+    for offset in [-1, 1]:
+        next_col = col + offset
+        if 0 < next_row + 1 < len(diagram) and 0 < next_col < len(diagram[0]):
+            splits.append((next_row + 1, next_col))
+
+    return splits, True
 
 
 start_column = diagram[0].index("S")
