@@ -40,37 +40,24 @@ print(total_splits)
 # B
 
 
-def find_timelines(beam_index: tuple[int, int], grid, cache: dict[str, int]):
-    timelines = 0
-    found = False
-    for next_row_index in range(beam_index[0] + 1, len(grid)):
-        if grid[next_row_index][beam_index[1]] == ".":
-            continue
-        left = next_row_index, beam_index[1] - 1
-        right = next_row_index, beam_index[1] + 1
-        left_key = str(left[0]) + "-" + str(left[1])
-        right_key = str(right[0]) + "-" + str(right[1])
-        if 0 < beam_index[1] - 1 < len(grid[0]):
-            if left_key in cache:
-                timelines += cache[left_key]
-            else:
-                found_timelines = find_timelines(left, grid, cache)
-                cache[left_key] = found_timelines
-                timelines += found_timelines
-            found = True
-        if 0 < beam_index[1] + 1 < len(grid[0]):
-            if right_key in cache:
-                timelines += cache[right_key]
-            else:
-                found_timelines = find_timelines(right, grid, cache)
-                cache[right_key] = found_timelines
-                timelines += found_timelines
-            found = True
-        if found:
-            break
-    if next_row_index == len(grid) - 1:
-        timelines += 1
-    return timelines
+def find_timelines(
+    beam_index: tuple[int, int], diagram: list[str], cache: dict[str, int]
+):
+    row, col = beam_index
+    for next_row in range(row + 1, len(diagram)):
+        if diagram[next_row][col] != ".":
+            timelines = 0
+            for offset in [-1, 1]:
+                next_col = col + offset
+                if 0 < next_col < len(diagram[0]):
+                    key = f"{next_row}-{next_col}"
+                    if key not in cache:
+                        cache[key] = find_timelines(
+                            (next_row, next_col), diagram, cache
+                        )
+                    timelines += cache[key]
+            return timelines
+    return 1
 
 
 start_column = diagram[0].index("S")
